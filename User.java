@@ -6,13 +6,13 @@ public class User implements Key {
     private String email;
     private String password;
 
-    private ArrayList<User> friends = new ArrayList<User>();
-    private ArrayList<User> invitations = new ArrayList<User>();
+    private List<User> friends = new ArrayList<User>();
+    private List<User> invitations = new ArrayList<User>();
 
-    private HashMap<User, ArrayList<Message>> chats = new HashMap<User, ArrayList<Message>>();
+    private HashMap<User, List<Message>> chats = new HashMap<User, List<Message>>();
 
-    private ArrayList<Community> myCommunities = new ArrayList<Community>();
-    private ArrayList<Community> communities = new ArrayList<Community>();
+    private List<Community> myCommunities = new ArrayList<Community>();
+    private List<Community> communities = new ArrayList<Community>();
 
     public User(String name, String email, String password) {
         this.name = name;
@@ -72,26 +72,31 @@ public class User implements Key {
         return password;
     }
 
-    public ArrayList<User> getFriends() {
+    public List<User> getFriends() {
         return friends;
     }
-    public ArrayList<User> getInvitations() {
+    public List<User> getInvitations() {
         return invitations;
     }
 
-    public HashMap<User, ArrayList<Message>> getChats() {
+    public HashMap<User, List<Message>> getChats() {
         return chats;
     }
 
-    public ArrayList<Community> getMyCommunities() {
+    public List<Community> getMyCommunities() {
         return myCommunities;
     }
-    public ArrayList<Community> getCommunities() {
+    public List<Community> getCommunities() {
         return communities;
     }
 
     @Override
     public String getKey() {
-        return email.toUpperCase();
+        return getEmail().toUpperCase();
+    }
+
+    @Override
+    public String printName() {
+        return getNameLastName();
     }
 }

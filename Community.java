@@ -5,10 +5,10 @@ public class Community implements Key {
     private String name;
     private String description;
     
-    private ArrayList<User> members = new ArrayList<User>();
-    private ArrayList<User> invitations = new ArrayList<User>();
+    private List<User> members = new ArrayList<User>();
+    private List<User> invitations = new ArrayList<User>();
 
-    private ArrayList<Message> chat = new ArrayList<Message>();
+    private List<Message> chat = new ArrayList<Message>();
 
     public Community(User creator, String name, String description) {
         this.creator = creator;
@@ -52,20 +52,25 @@ public class Community implements Key {
         return description;
     }
 
-    public ArrayList<User> getMembers() {
+    public List<User> getMembers() {
         return members;
     }
 
-    public ArrayList<User> getInvitations() {
+    public List<User> getInvitations() {
         return invitations;
     }
 
-    public ArrayList<Message> getChat() {
+    public List<Message> getChat() {
         return chat;
     }
 
     @Override
     public String getKey() {
-        return name.toUpperCase();
+        return getName().toUpperCase();
+    }
+
+    @Override
+    public String printName() {
+        return getName();
     }
 }

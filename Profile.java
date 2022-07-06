@@ -21,9 +21,17 @@ public class Profile {
         System.out.print("> ");
     }
 
-    private <T extends Message> void printText(T object) {
+    private void printText(Message object) {
         System.out.print(new SimpleDateFormat("[dd MMMM yyyy]|HH:mm|").format(object.getDate()).toUpperCase());
         System.out.println(" "+object.getSender().getNameLastName()+" disse: "+object.getText());
+    }
+
+    private <T extends Key> void printList(List<T> list, boolean index) {
+        int i = 1;
+        for(T element : list) {
+            if(index) System.out.print("|"+(i++)+"| ");
+            System.out.println(element.printName());
+        }
     }
 
     private void editProfile() throws IOException, InterruptedException {
@@ -187,11 +195,7 @@ public class Profile {
         int option = -1;
         do {
             title("Amigos > Solicitações de amizade");
-            int i = 0;
-            for(User user : connected.getInvitations()) {
-                System.out.println("|"+(i+1)+"| "+user.getNameLastName());
-                i++;
-            }
+            printList(connected.getInvitations(), true);
             System.out.println();
             endOfMenu();
 
@@ -237,10 +241,7 @@ public class Profile {
         int option = -1;
         do {
             title("Amigos");
-            if(!connected.getFriends().isEmpty()) {
-                for(User u : connected.getFriends())
-                    System.out.println(u.getNameLastName());
-            }
+            if(!connected.getFriends().isEmpty()) printList(connected.getFriends(), false);
             else System.out.println("Sem amigos");
 
             System.out.println();
@@ -296,13 +297,7 @@ public class Profile {
         int option = -1;
         do {
             title("Recados");
-            if(!connected.getFriends().isEmpty()) {
-                int i = 0;
-                for(User user : connected.getFriends()) {
-                    System.out.println("|"+(i+1)+"| "+user.getNameLastName());
-                    i++;
-                }
-            }
+            if(!connected.getFriends().isEmpty()) printList(connected.getFriends(), true);
             else System.out.println("Sem amigos");
 
             System.out.println();
@@ -484,10 +479,7 @@ public class Profile {
         int option = -1;
         do {
             title("Comunidades > Minhas comunidades");
-            if(!connected.getMyCommunities().isEmpty()) {
-                for(Community c : connected.getMyCommunities())
-                        System.out.println(c.getName());
-            }
+            if(!connected.getMyCommunities().isEmpty()) printList(connected.getCommunities(), false);
             else System.out.println("Sem comunidades");
             
             System.out.println();
@@ -535,12 +527,7 @@ public class Profile {
         int option = -1;
         do {
             title("Comunidades > Recados");
-            int i = 0;
-            for(Community community : connected.getCommunities()) {
-                System.out.println("|"+(i+1)+"| "+community.getName());
-                i++;
-            }
-
+            printList(connected.getCommunities(), true);
             System.out.println();
             endOfMenu();
             
@@ -582,10 +569,7 @@ public class Profile {
         int option = -1;
         do {
             title("Comunidades");
-            if(!connected.getCommunities().isEmpty()) {
-                for(Community c : connected.getCommunities())
-                    System.out.println(c.getName());
-            }
+            if(!connected.getCommunities().isEmpty()) printList(connected.getCommunities(), false);
             else System.out.println("Sem comunidades");
 
             System.out.println();
