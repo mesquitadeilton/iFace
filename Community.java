@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Community implements Key {
+public class Community implements Idetification {
     private User creator;
     private String name;
     private String description;
@@ -70,7 +70,7 @@ public class Community implements Key {
     }
 
     @Override
-    public String printName() {
+    public String getFullName() {
         return getName();
     }
 }

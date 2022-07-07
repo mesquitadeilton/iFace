@@ -23,15 +23,36 @@ public class Profile {
 
     private void printText(Message object) {
         System.out.print(new SimpleDateFormat("[dd MMMM yyyy]|HH:mm|").format(object.getDate()).toUpperCase());
-        System.out.println(" "+object.getSender().getNameLastName()+" disse: "+object.getText());
+        System.out.println(" "+object.getSender().getFullName()+" disse: "+object.getText());
     }
 
-    private <T extends Key> void printList(List<T> list, boolean index) {
+    private <T extends Idetification> void printList(List<T> list, boolean index) {
         int i = 1;
         for(T element : list) {
             if(index) System.out.print("|"+(i++)+"| ");
-            System.out.println(element.printName());
+            System.out.println(element.getFullName());
         }
+    }
+
+    private void chat(String name, List<Message> list) throws IOException, InterruptedException {
+        String text;
+        do {
+            Main.clear();
+            title("Recados > "+name);
+                        
+            if(!list.isEmpty())
+                for(Message message : list)
+                    printText(message);
+            System.out.println();
+            endOfMenu();
+            text = Main.input.nextLine();
+
+            if(!text.equals("0") && !text.isEmpty()) {
+                Message message = new Message(connected, text, Calendar.getInstance().getTime());
+                list.add(message);
+            }
+        } while(!text.equals("0"));
+        Main.clear();
     }
 
     private void editProfile() throws IOException, InterruptedException {
@@ -204,7 +225,7 @@ public class Profile {
 
                 if(option != 0) {
                     System.out.println();
-                    System.out.println("Solicitação de "+connected.getInvitations().get(option-1).getNameLastName()+":");
+                    System.out.println("Solicitação de "+connected.getInvitations().get(option-1).getFullName()+":");
                     System.out.println();
                     System.out.println("|1| Aceitar");
                     System.out.println("|2| Recusar");
@@ -214,8 +235,11 @@ public class Profile {
                     Main.clear();
                     switch(action) {
                         case 1:
+                            List<Message> chat = new ArrayList<Message>();
                             connected.setFriend(connected.getInvitations().get(option-1));
+                            connected.setChat(connected.getInvitations().get(option-1), chat);
                             connected.getInvitations().get(option-1).setFriend(connected);
+                            connected.getInvitations().get(option-1).setChat(connected, chat);
                             connected.getInvitations().remove(option-1);
                             return;
                         case 2:
@@ -261,12 +285,12 @@ public class Profile {
 
                         User user = Main.search(Main.users, email.toUpperCase());
                         if(user == null) throw new Exception("USUÁRIO NÃO ENCONTRADO");
-                        if(user.getInvitations().contains(connected) || connected.getInvitations().contains(user)) throw new Exception("CONVITE PARA "+user.getNameLastName().toUpperCase()+" JÁ ENVIADO");
-                        if(connected.getFriends().contains(user)) throw new Exception(user.getNameLastName().toUpperCase()+" JÁ FAZ PARTE DA SUA LISTA DE AMIGOS");
+                        if(user.getInvitations().contains(connected) || connected.getInvitations().contains(user)) throw new Exception("CONVITE PARA "+user.getFullName().toUpperCase()+" JÁ ENVIADO");
+                        if(connected.getFriends().contains(user)) throw new Exception(user.getFullName().toUpperCase()+" JÁ FAZ PARTE DA SUA LISTA DE AMIGOS");
 
                         user.setInvitation(connected);
                         Main.clear();
-                        System.out.println("Convite enviado para "+user.getNameLastName());
+                        System.out.println("Convite enviado para "+user.getFullName());
                         break;
                     case 2:
                         Main.clear();
@@ -307,35 +331,9 @@ public class Profile {
                 option = Integer.parseInt(Main.input.next());
                 Main.clear();
 
-                User friend = null;
-                if(option !=0) friend = connected.getFriends().get(option-1);
-
-                if((option != 0) && (friend != null)) {
-                    String text;
-                    do {
-                        Main.clear();
-                        title("Recados > "+connected.getFriends().get(option-1).getNameLastName());
-                        
-                        if(connected.getChats().get(friend) != null && !connected.getChats().get(friend).isEmpty())
-                            for(Message message : connected.getChats().get(friend))
-                                printText(message);
-                        else {
-                            connected.setChat(friend);
-                            friend.setChat(connected);
-                        }
-
-                        System.out.println();
-                        endOfMenu();
-                        text = Main.input.nextLine();
-
-                        if(!text.equals("0") && !text.isEmpty()) {
-                            Message message = new Message(connected, text, Calendar.getInstance().getTime());
-
-                            connected.setChatMessage(friend, message);
-                            friend.setChatMessage(connected, message);
-                        }
-                    } while(!text.equals("0"));
-                    Main.clear();
+                if(option !=0) {
+                    User friend = connected.getFriends().get(option-1);
+                    chat(friend.getName(), connected.getChats().get(friend));
                 }
             } catch(Exception e) {
                 Main.clear();
@@ -396,7 +394,7 @@ public class Profile {
             title("Comunidades > Convites para "+community.getName());
             int j = 0;
             for(User u : community.getInvitations()) {
-                System.out.println("|"+(j+1)+"| "+u.getNameLastName());
+                System.out.println("|"+(j+1)+"| "+u.getFullName());
                 j++;
             }
             System.out.println();
@@ -407,7 +405,7 @@ public class Profile {
                 if(option != 0) {
                     int action;
                     System.out.println();
-                    System.out.println("Convite de "+community.getInvitations().get(option-1).getNameLastName()+" para fazer parte de "+community.getName()+":");
+                    System.out.println("Convite de "+community.getInvitations().get(option-1).getFullName()+" para fazer parte de "+community.getName()+":");
                     System.out.println();
                     System.out.println("|1| Aceitar");
                     System.out.println("|2| Recusar");
@@ -537,25 +535,7 @@ public class Profile {
 
                 if((option != 0)) {
                     Community community = connected.getCommunities().get(option-1);
-                    String text;
-                    do {
-                        Main.clear();
-                        title("Comunidades > Recados > "+community.getName());
-                        if(!connected.getCommunities().isEmpty())
-                            for(Message message : community.getChat())
-                                printText(message);
-
-                        System.out.println();
-                        endOfMenu();
-                        text = Main.input.nextLine();
-
-                        if(!text.equals("0") && !text.isEmpty()) {
-                            Message message = new Message(connected, text, Calendar.getInstance().getTime());
-
-                            community.setMessage(message);
-                        }
-                    } while(!text.equals("0"));
-                    Main.clear();
+                    chat(community.getName(), community.getChat());
                 }
             } catch(Exception e) {
                 Main.clear();
@@ -656,7 +636,7 @@ public class Profile {
         Main.clear();
         int option = -1;
         do {
-            title(connected.getNameLastName());
+            title(connected.getFullName());
             System.out.println("Amigos: "+connected.getFriends().size());
             System.out.println("Comunidades: "+connected.getCommunities().size());
             System.out.println();

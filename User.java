@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class User implements Key {
+public class User implements Idetification {
     private String name;
     private String lastName = "";
     private String email;
@@ -40,8 +40,8 @@ public class User implements Key {
         invitations.add(invitation);
     }
 
-    public void setChat(User key) {
-        chats.put(key, new ArrayList<Message>());
+    public void setChat(User key, List<Message> chat) {
+        chats.put(key, chat);
     }
 
     public void setChatMessage(User key, Message message) {
@@ -53,10 +53,6 @@ public class User implements Key {
     }
     public void setComunity(Community community) {
         communities.add(community);
-    }
-
-    public String getNameLastName() {
-        return (lastName.isEmpty()) ? name : name+" "+lastName;
     }
 
     public String getName() {
@@ -96,7 +92,7 @@ public class User implements Key {
     }
 
     @Override
-    public String printName() {
-        return getNameLastName();
+    public String getFullName() {
+        return (lastName.isEmpty()) ? name : name+" "+lastName;
     }
 }
