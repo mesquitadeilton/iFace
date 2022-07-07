@@ -5,6 +5,9 @@
 * Long Methode
 * Large Class
 
+## Design Pattern
+* Extracted Method: title(), endOfMenu(), printText(), printList().
+
 ## Funções 
 |  Título        | Descrição | Progresso atual | Finalizado | 
 |----------------|---------------|----------------|-----------|
