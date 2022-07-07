@@ -8,7 +8,7 @@ public class Main {
     static List<Community> communities = new ArrayList<Community>();
     static List<Post> feed = new ArrayList<Post>();
 
-    public static <T extends Idetification>T search(List<T> list, String key) {
+    public static <T extends Identification>T search(List<T> list, String key) {
         for(T element : list) 
             if(element.getKey().equals(key)) return element;
 

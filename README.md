@@ -5,8 +5,8 @@
 * Long Methode
 * Large Class
 
-## Design Pattern
-* Extracted Method: title(), endOfMenu(), printText(), printList().
+## Refatoração
+* Profile.java > Extracted Method: title(), endOfMenu(), printText(), printList(), chat().
 
 ## Funções 
 |  Título        | Descrição | Progresso atual | Finalizado | 

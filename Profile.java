@@ -26,7 +26,7 @@ public class Profile {
         System.out.println(" "+object.getSender().getFullName()+" disse: "+object.getText());
     }
 
-    private <T extends Idetification> void printList(List<T> list, boolean index) {
+    private <T extends Identification> void printList(List<T> list, boolean index) {
         int i = 1;
         for(T element : list) {
             if(index) System.out.print("|"+(i++)+"| ");

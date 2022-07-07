@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Community implements Idetification {
+public class Community implements Identification {
     private User creator;
     private String name;
     private String description;

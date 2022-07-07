@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class User implements Idetification {
+public class User implements Identification {
     private String name;
     private String lastName = "";
     private String email;

@@ -1,4 +1,4 @@
-public interface Idetification {
+public interface Identification {
     String getKey();
     String getFullName();
 }
