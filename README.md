@@ -1,12 +1,6 @@
 # iFace <div align="left">![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
 
-## Code Smells
-* Duplicated Code
-* Long Methode
-* Large Class
-
-## Refatoração
-* Profile.java > Extracted Method: title(), endOfMenu(), printText(), printList(), chat().
+Projeto de rede social desenvolvido para avaliação na matéria de Projeto de Software sob orientação do professor Baldoino Fonseca dos Santos Neto, no Instituto de Computação - IC na Universidade Federal de Alagoas - UFAL.
 
 ## Funções 
 |  Título        | Descrição | Progresso atual | Finalizado | 
