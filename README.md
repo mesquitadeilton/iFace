@@ -1,4 +1,4 @@
-# iFace <div align="left">![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
+# iFace <div align="left">![Badge](http://img.shields.io/static/v1?label=STATUS&message=NÃO%20FINALIZADO&color=GREEN&style=for-the-badge)
 
 Projeto de rede social desenvolvido para avaliação na matéria de Projeto de Software sob orientação do professor Baldoino Fonseca dos Santos Neto.
 
